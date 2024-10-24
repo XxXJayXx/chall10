@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberXbytes Web Challenge</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p#result {
+            font-size: 18px;
+            color: #e74c3c;
+            margin-top: 20px;
+        }
+
+        .animation {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container animation">
+        <h2>Enter the secret message:</h2>
+        <form id="flagForm">
+            <input type="text" id="message" maxlength="10" placeholder="Enter your message" required>
+            <button type="submit">Submit</button>
+        </form>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        const secretMessage = "Success comes to those who work hard and never give up on their dreams. Every challenge is an opportunity to grow and achieve greatness.";
+
+        document.getElementById("flagForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var message = document.getElementById("message").value;
+            if (message === secretMessage) {
+                fetch('/getFlag')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById("result").textContent = "Congrats! Here is your flag: " + data;
+                        document.getElementById("result").style.color = "#2ecc71";
+                    })
+                    .catch(error => console.log('Error:', error));
+            } else {
+                document.getElementById("result").textContent = "Error: Incorrect message.";
+            }
+        });
+    </script>
+</body>
+</html>
